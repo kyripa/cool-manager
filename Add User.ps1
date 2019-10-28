@@ -226,9 +226,6 @@ $goButton.add_Click({
     if(!$global:ADmoduleLoad){
         connectAD -dc $DefDC           
     }
-    if(!$global:EXmoduleLoad){
-        connectExchange -exchange $ExConnection
-     }
 
      $userCSV = $addUserGrid.SelectedItems
      
@@ -249,9 +246,9 @@ foreach($user in $userCSV) {
             
             Start-Sleep -Seconds 1
             
-            Set-ADUser $user."login" -MobilePhone $user.korpTel -WarningAction SilentlyContinue
-            Set-ADUser $user."login" -HomePhone $user.otherTel -WarningAction SilentlyContinue
-            Set-ADUser $user."login" -OfficePhone $user.officeTel -WarningAction SilentlyContinue
+            Set-ADUser $user."login" -MobilePhone $user.korpTel -WarningAction SilentlyContinue -ErrorAction SilentlyContinue
+            Set-ADUser $user."login" -HomePhone $user.otherTel -WarningAction SilentlyContinue -ErrorAction SilentlyContinue
+            Set-ADUser $user."login" -OfficePhone $user.officeTel -WarningAction SilentlyContinue -ErrorAction SilentlyContinue
 
             Set-ADUser $user."login" -EmailAddress $user.email
 
