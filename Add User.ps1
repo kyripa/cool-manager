@@ -34,7 +34,7 @@ $xTabAdU = @"
         <Button Name="setGR" Content="&gt;&gt;&gt;" HorizontalAlignment="Left" Margin="448.577,306.493,0,0" VerticalAlignment="Top" Width="41" Height="19.293"/>
         <Button Name="setOU" Content="&gt;&gt;&gt;" HorizontalAlignment="Left" Margin="448.577,272.493,0,0" VerticalAlignment="Top" Width="41" Height="19.293"/>
         <Button Name="delGR" Content="&lt;&lt;&lt;" HorizontalAlignment="Left" Margin="448.577,343.243,0,0" VerticalAlignment="Top" Width="41" Height="19.293"/>
-        <TextBlock Name="setOUTb" HorizontalAlignment="Left" Height="18.293" Margin="494.577,273.493,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="424.007" FontSize="10" Text="CN=Users,DC=mirs,DC=itd"/>
+        <TextBlock Name="setOUTb" HorizontalAlignment="Left" Height="18.293" Margin="494.577,273.493,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="424.007" FontSize="10" Text=""/>
         <Button Name="GetOU" Content="GetOU" HorizontalAlignment="Left" Margin="376.002,245.493,0,0" VerticalAlignment="Top" Width="47" Height="23"/>
         <DataGrid Name="checkGrid" HorizontalAlignment="Left" Height="153.342" Margin="10,417.493,0,0" VerticalAlignment="Top" Width="1002.796" IsReadOnly="True" FontSize="10"/>
         <Button Name="goButton" Content="GO!" HorizontalAlignment="Left" Margin="890.762,381.764,0,0" VerticalAlignment="Top" Width="90" Height="25.46"/>
@@ -44,38 +44,22 @@ $xTabAdU = @"
 
 "@
 $xTabSettings = @"
-            <TabItem Name="Settings" Header="Settings" HorizontalAlignment="Left" Height="19.96" VerticalAlignment="Top" Width="53.9733333333333">
+        <TabItem Name="Settings" Header="Settings" HorizontalAlignment="Left" Height="19.96" VerticalAlignment="Top" Width="53.9733333333333">
                 <Grid Background="#FFE5E5E5">
-                    <GroupBox Name="Exchange_settings" Header="Exchange" HorizontalAlignment="Left" Height="129.16" Margin="10,10,0,0" VerticalAlignment="Top" Width="286.333">
+                    <GroupBox Name="AddDeluser_settings" Header="Add/Del user" HorizontalAlignment="Left" Height="129.16" Margin="10,10,0,0" VerticalAlignment="Top" Width="447">
                         <Grid Margin="0,0,-2,-1.626">
-                            <TextBox Name="Settings_ExConnection_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="http://post.tu.odessa.ua/powershell" VerticalAlignment="Top" Width="256.333" Margin="10,25.96,0,0" FontSize="10"/>
-                            <Label Content="Connection:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" FontSize="10"/>
-                            <TextBox Name="Settings_ExDefDB_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="MAILBOXTUDB01" VerticalAlignment="Top" Width="256.333" Margin="10,74.92,0,0" FontSize="10"/>
-                            <Label Content="Default new user database:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,48.96,0,0" FontSize="10"/>
-                        </Grid>
-                    </GroupBox>
-                    <GroupBox Name="AddDeluser_settings" Header="Add/Del user" HorizontalAlignment="Left" Height="129.16" Margin="301.333,10,0,0" VerticalAlignment="Top" Width="447">
-                        <Grid Margin="0,0,-2,-1.626">
-                            <TextBox Name="Settings_DefNewUsersOU_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="OU=Пользователи,OU=ТехноЮг,DC=tu,DC=odessa,DC=ua" VerticalAlignment="Top" Width="417" Margin="10,25.96,0,0" FontSize="10"/>
+                            <TextBox Name="Settings_DefNewUsersOU_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="CN=Users,DC=mirs,DC=itd" VerticalAlignment="Top" Width="417" Margin="10,25.96,0,0" FontSize="10"/>
                             <Label Content="Default new users OU:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" FontSize="10"/>
-                            <TextBox Name="Settings_DefDismissedUsersOU_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="OU=_Уволенные сотрудники,OU=Пользователи,OU=ТехноЮг,DC=tu,DC=odessa,DC=ua" VerticalAlignment="Top" Width="417" Margin="10,79.92,0,0" FontSize="10"/>
+                            <TextBox Name="Settings_DefDismissedUsersOU_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="CN=Users,DC=mirs,DC=itd" VerticalAlignment="Top" Width="417" Margin="10,79.92,0,0" FontSize="10"/>
                             <Label Content="Default dismissed users OU:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,53.96,0,0" FontSize="10"/>
                         </Grid>
                     </GroupBox>
-                    <GroupBox Name="RDS_settings" Header="RDS" HorizontalAlignment="Left" Height="129.16" Margin="10,144.16,0,0" VerticalAlignment="Top" Width="286.333">
-                        <Grid Margin="0,0,-2,-1.626">
-                            <TextBox Name="Settings_DefRDCB_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="rdcb.tu.odessa.ua" VerticalAlignment="Top" Width="256.333" Margin="10,25.96,0,0" FontSize="10"/>
-                            <Label Content="Connection Broker:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" FontSize="10"/>
-                            <TextBox Name="Settings_DefCollection_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="Ферма RDS" VerticalAlignment="Top" Width="256.333" Margin="10,74.92,0,0" FontSize="10"/>
-                            <Label Content="Collection:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,48.96,0,0" FontSize="10"/>
-                        </Grid>
-                    </GroupBox>
                     <Button Name="Settings_save_B" Content="Save" HorizontalAlignment="Left" Margin="10,278.32,0,0" VerticalAlignment="Top" Width="75"/>
-                    <GroupBox Name="ActiveDirectory" Header="ActiveDirectory" HorizontalAlignment="Left" Height="129.16" Margin="301.333,144.16,0,0" VerticalAlignment="Top" Width="447">
+                    <GroupBox Name="ActiveDirectory" Header="ActiveDirectory" HorizontalAlignment="Left" Height="129.16" Margin="10,144.16,0,0" VerticalAlignment="Top" Width="447">
                         <Grid Margin="0,0,-2,-1.626">
-                            <TextBox Name="Settings_DefDC_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="pdc.tu.odessa.ua" VerticalAlignment="Top" Width="417" Margin="10,25.96,0,0" FontSize="10"/>
+                            <TextBox Name="Settings_DefDC_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="dc.mirs.itd" VerticalAlignment="Top" Width="417" Margin="10,25.96,0,0" FontSize="10"/>
                             <Label Content="Default DC Server:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" FontSize="10"/>
-                            <TextBox Name="Settings_DefTempGroupOU_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="OU=Временный доступ,OU=Группы доступа,OU=ТехноЮг,DC=tu,DC=odessa,DC=ua" VerticalAlignment="Top" Width="417" Margin="10,79.92,0,0" FontSize="10"/>
+                            <TextBox Name="Settings_DefTempGroupOU_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="CN=Users,DC=mirs,DC=itd" VerticalAlignment="Top" Width="417" Margin="10,79.92,0,0" FontSize="10"/>
                             <Label Content="Default temp group OU:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,53.96,0,0" FontSize="10"/>
                         </Grid>
                     </GroupBox>
@@ -241,7 +225,7 @@ $Settings_save_B.add_Click({
 $getCSV.add_Click({
 
     $OpenFileDialog = New-Object -TypeName System.Windows.Forms.OpenFileDialog
-    $OpenFileDialog.Filter = "Excell (*.xls)|*.xls|All files (*.*)|*.*";
+    $OpenFileDialog.Filter = "Excell (*.xlsm)|*.xlsm|All files (*.*)|*.*";
     $OpenFileDialog.ShowDialog()
 
     
@@ -326,6 +310,8 @@ $setOU.add_Click({
     $ou = $getGrDataGrid.SelectedItems
     $setOUTb.text = $ou[0].DistinguishedName
 })
+
+
 $goButton.add_Click({
     if(!$global:ADmoduleLoad){
         connectAD -dc $DefDC           
@@ -370,6 +356,8 @@ $checkGrid.itemsSource = @($checkUsers)
 
 
 })
+
+
 <#
 $checkButton.add_Click({
     $userCSV = $addUserGrid.SelectedItems
@@ -407,8 +395,10 @@ $checkButton.add_Click({
         $checkUsers += $U | Select-Object Enabled, Name, login, pass
     }
 
+  
     $checkGrid.itemsSource = @($checkUsers)
-
+      
+      <#
     foreach($user in $checkUsers){
         if($user.enabled -eq "true"){
             $msgBoxInput = [System.Windows.Forms.MessageBox]::Show('You really want connect mstsc to '+ $user.name +'?', 'Connect', 'YesNo', 'Warning')
@@ -425,13 +415,13 @@ $checkButton.add_Click({
                 }
             }
 
-
+    #>
 
 })
 #>
 #Adduser tab end
 
-<#  
+#  
 $Form.Add_Closing({
     try{
         Remove-PSSession -Name "Exchange" -ErrorAction Ignore
