@@ -1,8 +1,6 @@
 ﻿
 
 $global:setGroup = @()
-#$global:Credential = Get-Credential
-
 
 
 $xHead = @" 
@@ -251,9 +249,10 @@ $getGr.add_Click({
         connectAD -dc $DefDC           
     }
 
+        $Dname = $searchGroupTb.text
 
-    $Dname = $searchGroupTb.text
-    $g = Get-ADGroup -filter "name -like `"*$Dname*`"" | Select-Object name
+    
+    $g = Get-ADGroup -filter "name -like `"$Dname*`"" | Select-Object name
     
     $delGR.IsEnabled = $true
     $setGR.IsEnabled = $true 
@@ -265,7 +264,11 @@ $getUG.add_Click({
     if(!$global:ADmoduleLoad){
         connectAD -dc $DefDC           
     }
-    $Dname = $searchGroupTb.text
+
+
+        $Dname = $searchGroupTb.text
+
+    $us = @()
     $us = Get-ADUser -filter "name -like `"*$Dname*`""
     $g = @()
     if($us -ne $null){
@@ -326,25 +329,32 @@ $goButton.add_Click({
      $userGR = $setGrDataGrid.Items  
      
      $userOU = $setOUTb.text 
-     $userSIP = $sipTb.text
      $checkUsers = @()
 
 foreach($user in $userCSV) {  
-            New-Mailbox -Name $user.name `
-                        -Displayname $user.name `
-                        -Lastname $user.”lastName” `
-                        -FirstName $user.”firstName” `
-                        -OrganizationalUnit $userOU `
-                        -Database $global:ExDefDB `
-                        -UserPrincipalName ($user.”login” + "@tu.odessa.ua")`
-                        -Password (ConvertTo-SecureString $user."pass" -AsPlainText -Force)
+            New-ADUser  -Name $user.login `
+                        -DisplayName $user.name `
+                        -GivenName $user.firstname `
+                        -Surname $user.lastname `
+                        -AccountPassword (ConvertTo-SecureString $user.pass -AsPlainText -Force) `
+                        -Path "$userOU" `
+                        -UserPrincipalName ($user.login + '@mirs.itd')
+            
             Start-Sleep -Seconds 1
-            Set-ADUser $user."login" -Company "ТехноЮг" #TODO custom company
-            Set-ADUser $user."login" -OfficePhone $userSIP -WarningAction SilentlyContinue
-            Set-ADUser $user."login" -Department $user."department"
-            Set-ADUser $user."login" -Title $user."title"
-            Set-ADUser $user."login" -Office $user."office"            
-            Set-ADUser $user."login" -PasswordNeverExpires $true -CannotChangePassword $true -ChangePasswordAtLogon $false -Enabled $true
+            
+            Set-ADUser $user."login" -MobilePhone $user.korpTel -WarningAction SilentlyContinue
+            Set-ADUser $user."login" -HomePhone $user.otherTel -WarningAction SilentlyContinue
+            Set-ADUser $user."login" -OfficePhone $user.officeTel -WarningAction SilentlyContinue
+
+            Set-ADUser $user."login" -EmailAddress $user.email
+
+            Set-ADUser $user."login" -Company $user.department 
+            Set-ADUser $user."login" -Department $user.otdel
+            Set-ADUser $user."login" -Title $user.title
+            Set-ADUser $user."login" -Office $user.city 
+                      
+            Set-ADUser $user."login" -PasswordNeverExpires $true -CannotChangePassword $false -ChangePasswordAtLogon $false -Enabled $true
+            
             foreach($gr in $userGR.name){
                 Add-ADGroupMember -Identity $gr -Members $user."login"
             }
