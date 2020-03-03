@@ -16,5 +16,9 @@ jobs:
       run:  powershell .\ps2exe.ps1 -inputFile "CoolManage.ps1" -outputFile "Cool.exe" -noconsole -verbose
       shell: powershell 
     - name: Print dir
-      run: dir     
+      run: dir 
+    - uses: ncipollo/release-action@v1
+      with:
+        artifact: "cool.exe"
+        token: ${{ secrets.GITHUB_TOKEN }}    
  
