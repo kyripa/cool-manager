@@ -15,10 +15,13 @@ jobs:
     - name: Display the path
       run:  powershell .\ps2exe.ps1 -inputFile "CoolManage.ps1" -outputFile "Cool.exe" -noconsole -verbose
       shell: powershell  
-    - name: Upload the artifacts
-      uses: skx/github-action-publish-binaries@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Upload
+      uses: "marvinpinto/action-automatic-releases@latest"
       with:
-        args: '*.exe'   
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            *.exe 
  
