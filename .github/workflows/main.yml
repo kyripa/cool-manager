@@ -13,6 +13,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Display the path
-      run:  powershell .\ps2exe.ps1 -inputFile "CoolManage.ps1" -outputFile "Cool.exe" -noconsole -runtime30
+      run:  powershell .\ps2exe.ps1 -inputFile "CoolManage.ps1" -outputFile "Cool.exe" -noconsole
       shell: powershell      
  
