@@ -90,6 +90,12 @@ if( $psversion -eq 0 ) {
     write-host "THE POWERSHELL VERSION IS UNKNOWN!"
     #exit -1
 }
+###################################
+#force use ps4
+###################################
+$psversion = 4
+$runtime40 = $true
+###################################
 
 if( [string]::IsNullOrEmpty($inputFile) -or [string]::IsNullOrEmpty($outputFile) ) {
     write-host "INPUT FILE AND OUTPUT FILE NOT SPECIFIED!"
