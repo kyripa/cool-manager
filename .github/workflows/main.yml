@@ -14,12 +14,10 @@ jobs:
     - uses: actions/checkout@v2
     - name: Display the path
       run:  powershell .\ps2exe.ps1 -inputFile "CoolManage.ps1" -outputFile "Cool.exe" -noconsole -verbose
-      shell: powershell 
-    - name: Print dir
-      run: dir 
+      shell: powershell  
     - uses: ncipollo/release-action@v1
       with:
         artifact: "cool.exe"
-        commit: ${{ env.GITHUB_SHA }}
+        #commit: ${{ env.GITHUB_SHA }}
         token: ${{ secrets.GITHUB_TOKEN }}    
  
