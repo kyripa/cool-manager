@@ -20,6 +20,6 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         artifact: "cool.exe"
-        tag: "v1"
+        commit: ${{ env.GITHUB_SHA }}
         token: ${{ secrets.GITHUB_TOKEN }}    
  
