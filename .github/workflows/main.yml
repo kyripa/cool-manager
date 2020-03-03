@@ -11,9 +11,8 @@ jobs:
     runs-on: [windows-latest]
 
     steps:
-    #- uses: actions/checkout@v2
-    - name: Run a one-line script
-      run: echo Hello, world!
+    - uses: actions/checkout@v2
     - name: Display the path
-      run:  powershell -Command "$host.version"
-      shell: powershell
+      run:  .\ps2exe.ps1 -inputFile "CoolManage.ps1" -outputFile "Cool.exe" -noconsole
+      shell: powershell      
+ 
