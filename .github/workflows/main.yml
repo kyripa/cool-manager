@@ -15,5 +15,5 @@ jobs:
     - name: Run a one-line script
       run: echo Hello, world!
     - name: Display the path
-      run: echo ${host:version}
+      run:  powershell -Command "$host.version"
       shell: powershell
