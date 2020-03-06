@@ -46,9 +46,9 @@ $xTabSettings = @"
                 <Grid Background="#FFE5E5E5">
                     <GroupBox Name="AddDeluser_settings" Header="Add/Del user" HorizontalAlignment="Left" Height="129.16" Margin="10,10,0,0" VerticalAlignment="Top" Width="447">
                         <Grid Margin="0,0,-2,-1.626">
-                            <TextBox Name="Settings_DefNewUsersOU_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="CN=Users,DC=mirs,DC=itd" VerticalAlignment="Top" Width="417" Margin="10,25.96,0,0" FontSize="10"/>
+                            <TextBox Name="Settings_DefNewUsersOU_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="OU=Пользователи MIRS,OU=MIRS,DC=mirs,DC=itd" VerticalAlignment="Top" Width="417" Margin="10,25.96,0,0" FontSize="10"/>
                             <Label Content="Default new users OU:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,0,0,0" FontSize="10"/>
-                            <TextBox Name="Settings_DefDismissedUsersOU_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="CN=Users,DC=mirs,DC=itd" VerticalAlignment="Top" Width="417" Margin="10,79.92,0,0" FontSize="10"/>
+                            <TextBox Name="Settings_DefDismissedUsersOU_Tb" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" Text="OU=Пользователи MIRS,OU=MIRS,DC=mirs,DC=itd" VerticalAlignment="Top" Width="417" Margin="10,79.92,0,0" FontSize="10"/>
                             <Label Content="Default dismissed users OU:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,53.96,0,0" FontSize="10"/>
                         </Grid>
                     </GroupBox>
