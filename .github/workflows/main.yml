@@ -18,11 +18,12 @@ jobs:
       id: vars
       run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
     - name: Compile ps1 to exe
-      run:  powershell .\ps2exe.ps1 -iconFile "CoolManage.ico" -inputFile "CoolManage.ps1" -outputFile "CoolManage.exe" -title "$title"  -requireAdmin -copyright "$copyright" -noOutput -noError -noconsole -verbose
+      run:  powershell $COMMAND 
       shell: pwsh
       env:
         title: "Git commit ${{ steps.vars.outputs.sha_short }}"  
         copyright: "Andrew Kuripka"
+        COMMAND: .\ps2exe.ps1 -iconFile "CoolManage.ico" -inputFile "CoolManage.ps1" -outputFile "CoolManage.exe" -title $title  -requireAdmin -copyright $copyright -noOutput -noError -noconsole -verbose
     - name: Upload
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
