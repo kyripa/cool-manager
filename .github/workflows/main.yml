@@ -24,7 +24,7 @@ jobs:
         title: "Git commit ${{ steps.vars.outputs.sha_short }}"  
         copyright: "Andrew Kuripka"        
     - name: Upload
-    - uses: meeDamian/github-release@2.0
+      uses: meeDamian/github-release@2.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         name: "Development Build-${{ steps.vars.outputs.sha_short }}"
