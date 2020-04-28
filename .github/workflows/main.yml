@@ -5,15 +5,18 @@ on:
     branches: 
       - master
 
+
 jobs:
   build:
+    env:
+      VERSION: ${GITHUB_SHA:7}
 
     runs-on: [windows-latest]
 
     steps:
     - uses: actions/checkout@v2
     - name: Display the path
-      run:  powershell .\ps2exe.ps1 -iconFile "CoolManage.ico" -inputFile "CoolManage.ps1" -version ${{ env.GITHUB_RUN_NUMBER }} -outputFile "CoolManage.exe" -requireAdmin -copyright 'AndrewKuripka' -noOutput -noError -noconsole -verbose
+      run:  powershell .\ps2exe.ps1 -iconFile "CoolManage.ico" -inputFile "CoolManage.ps1" -version ${{ env.VERSION }} -outputFile "CoolManage.exe" -requireAdmin -copyright 'AndrewKuripka' -noOutput -noError -noconsole -verbose
       shell: powershell  
     - name: Upload
       uses: "marvinpinto/action-automatic-releases@latest"
@@ -21,6 +24,6 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: false
-          title: "Development Build-${{ env.GITHUB_RUN_NUMBER }}"
+          title: "Development Build-${{ env.VERSION }}"
           files: "CoolManage.exe" 
  
