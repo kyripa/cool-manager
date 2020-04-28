@@ -142,6 +142,8 @@ else
 	Write-Output "PowerShell 2.0 environment started...`n"
 }
 
+
+
 ###################################
 
 #force use ps4
@@ -240,7 +242,7 @@ $copyright = $copyright -replace "\\", "\\"
 $trademark = $trademark -replace "\\", "\\"
 $description = $description -replace "\\", "\\"
 $company = $company -replace "\\", "\\"
-<#
+
 if (![STRING]::IsNullOrEmpty($version))
 { # check for correct version number information
 	if ($version -notmatch "(^\d+\.\d+\.\d+\.\d+$)|(^\d+\.\d+\.\d+$)|(^\d+\.\d+$)|(^\d+$)")
@@ -249,8 +251,39 @@ if (![STRING]::IsNullOrEmpty($version))
 		exit -1
 	}
 }
-#>
+
 Write-Output ""
+
+Write-Output " inputFile $inputFile "
+Write-Output " outputFile $outputFile "
+Write-Output " verbose $verbose "
+Write-Output " debug $debug "
+Write-Output " $runtime20"
+Write-Output " $runtime40"
+Write-Output " $x86"
+Write-Output " $x64"
+Write-Output " $STA"
+Write-Output " $MTA"
+Write-Output " $nested"
+Write-Output " $noConsole"
+Write-Output " $credentialGUI"
+Write-Output "iconFile $iconFile"
+Write-Output "title $title"
+Write-Output "description $description"
+Write-Output "company $company"
+Write-Output "product $product"
+Write-Output "copyright $copyright"
+Write-Output "trademark $trademark"
+Write-Output "version $version"
+Write-Output "configFile $configFile"
+Write-Output "noConfigFile $noConfigFile"
+Write-Output "noOutput $noOutput"
+Write-Output "noError $noError"
+Write-Output "requireAdmin $requireAdmin"
+Write-Output "supportOS $supportOS"
+Write-Output "virtualize $virtualize"
+Write-Output "longPaths $longPaths"
+
 
 $type = ('System.Collections.Generic.Dictionary`2') -as "Type"
 $type = $type.MakeGenericType( @( ("System.String" -as "Type"), ("system.string" -as "Type") ) )
