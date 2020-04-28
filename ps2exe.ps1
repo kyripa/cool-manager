@@ -350,7 +350,7 @@ $copyright = $copyright -replace "\\", "\\"
 $trademark = $trademark -replace "\\", "\\"
 $description = $description -replace "\\", "\\"
 $company = $company -replace "\\", "\\"
-
+<#
 if (![STRING]::IsNullOrEmpty($version))
 { # check for correct version number information
 	if ($version -notmatch "(^\d+\.\d+\.\d+\.\d+$)|(^\d+\.\d+\.\d+$)|(^\d+\.\d+$)|(^\d+$)")
@@ -359,7 +359,7 @@ if (![STRING]::IsNullOrEmpty($version))
 		exit -1
 	}
 }
-
+#>
 Write-Output ""
 
 $type = ('System.Collections.Generic.Dictionary`2') -as "Type"
