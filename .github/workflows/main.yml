@@ -19,7 +19,7 @@ jobs:
       run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
     - name: Compile ps1 to exe
       run:  powershell $COMMAND 
-      shell: pwsh
+      shell: powershell
       env:
         title: "Git commit ${{ steps.vars.outputs.sha_short }}"  
         copyright: "Andrew Kuripka"
