@@ -113,6 +113,11 @@ else
 	Write-Output "PowerShell 2.0 environment started...`n"
 }
 
+Write-Output "      version=   $version"
+
+
+
+
 if ([STRING]::IsNullOrEmpty($inputFile))
 {
 	Write-Output "Usage:`n"
