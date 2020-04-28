@@ -18,7 +18,7 @@ jobs:
       id: vars
       run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
     - name: Compile ps1 to exe
-      run:  .\ps2exe.ps1 -iconFile CoolManage.ico -inputFile CoolManage.ps1 -outputFile CoolManage.exe -title $env:title  -requireAdmin -copyright $env:copyright -noOutput -noError -noconsole -verbose 
+      run:  .\ps2exe.ps1 -iconFile CoolManage.ico -inputFile CoolManage.ps1 -outputFile CoolManage.exe -version ${{ github.ref}} -title $env:title  -requireAdmin -copyright $env:copyright -noOutput -noError -noconsole -verbose 
       shell: powershell
       env:
         title: "Git commit ${{ steps.vars.outputs.sha_short }}"  
@@ -27,7 +27,7 @@ jobs:
       id: create_release
       uses: actions/create-release@v1
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       with:
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
@@ -37,7 +37,7 @@ jobs:
       id: upload-release-asset 
       uses: actions/upload-release-asset@v1
       env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
           asset_path: ./CoolManage.exe
