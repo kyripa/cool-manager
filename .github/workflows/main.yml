@@ -20,6 +20,7 @@ jobs:
     - name: Get the version
       id: get_version
       run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+      shell: bash
     - name: Compile ps1 to exe
       run:  .\ps2exe.ps1 -iconFile CoolManage.ico -inputFile CoolManage.ps1 -version $env:VERSION -outputFile CoolManage.exe -title $env:title  -requireAdmin -copyright $env:copyright -noOutput -noError -noconsole -verbose 
       shell: powershell
