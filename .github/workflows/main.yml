@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Display the path
-      run:  powershell .\ps2exe.ps1 -iconFile "CoolManage.ico" -inputFile "CoolManage.ps1" -outputFile "CoolManage.exe" -requireAdmin -copyright 'Andrew Kuripka' -noOutput -noError -noconsole -verbose
+      run:  powershell .\ps2exe.ps1 -iconFile "CoolManage.ico" -inputFile "CoolManage.ps1" -outputFile "CoolManage.exe" -requireAdmin -copyright 'AndrewKuripka' -noOutput -noError -noconsole -verbose
       shell: powershell  
     - name: Upload
       uses: "marvinpinto/action-automatic-releases@latest"
