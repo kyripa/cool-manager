@@ -1,5 +1,3 @@
-﻿
-
 $global:setGroup = @()
 #$global:Credential = Get-Credential
 
