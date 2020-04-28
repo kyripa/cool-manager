@@ -18,8 +18,8 @@ jobs:
       id: vars
       run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
     - name: powershell env 
-      run:  echo $env:title
+      run:  echo $env:title + $env:copyright
       shell: powershell
       env:
-        title: "Git commit ${{ steps.vars.outputs.sha_short }}"  
+        title: "\"Git commit ${{ steps.vars.outputs.sha_short }}\""  
         copyright: "\"Andrew Kuripka\""
