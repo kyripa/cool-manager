@@ -89,11 +89,37 @@ Author: Ingo Karstein, Markus Scholtes
 https://gallery.technet.microsoft.com/PS2EXE-GUI-Convert-e7cb69d5
 #>
 
-Param([STRING]$inputFile = $NULL, [STRING]$outputFile = $NULL, [SWITCH]$verbose, [SWITCH]$debug, [SWITCH]$runtime20, [SWITCH]$runtime40,
-	[SWITCH]$x86, [SWITCH]$x64, [SWITCH]$STA, [SWITCH]$MTA, [SWITCH]$nested, [SWITCH]$noConsole, [SWITCH]$credentialGUI,
-	[STRING]$iconFile = $NULL, [STRING]$title, [STRING]$description, [STRING]$company, [STRING]$product, [STRING]$copyright, [STRING]$trademark,
-	[STRING]$version, [SWITCH]$configFile, [SWITCH]$noConfigFile, [SWITCH]$noOutput, [SWITCH]$noError, [SWITCH]$requireAdmin, [SWITCH]$supportOS,
-	[SWITCH]$virtualize, [SWITCH]$longPaths)
+Param(
+	[STRING]$inputFile = $NULL, 
+	[STRING]$outputFile = $NULL, 
+	[SWITCH]$verbose, 
+	[SWITCH]$debug, 
+	[SWITCH]$runtime20, 
+	[SWITCH]$runtime40,
+	[SWITCH]$x86, 
+	[SWITCH]$x64, 
+	[SWITCH]$STA, 
+	[SWITCH]$MTA, 
+	[SWITCH]$nested, 
+	[SWITCH]$noConsole, 
+	[SWITCH]$credentialGUI,
+	[STRING]$iconFile = $NULL, 
+	[STRING]$title, 
+	[STRING]$description, 
+	[STRING]$company, 
+	[STRING]$product, 
+	[STRING]$copyright, 
+	[STRING]$trademark,
+	[STRING]$version, 
+	[SWITCH]$configFile, 
+	[SWITCH]$noConfigFile, 
+	[SWITCH]$noOutput, 
+	[SWITCH]$noError, 
+	[SWITCH]$requireAdmin, 
+	[SWITCH]$supportOS,
+	[SWITCH]$virtualize, 
+	[SWITCH]$longPaths
+)
 
 <################################################################################>
 <##                                                                            ##>
@@ -115,45 +141,6 @@ else
 {
 	Write-Output "PowerShell 2.0 environment started...`n"
 }
-
-if ([STRING]::IsNullOrEmpty($inputFile))
-{
-	Write-Output "Usage:`n"
-	Write-Output "powershell.exe -command ""&'.\ps2exe.ps1' [-inputFile] '<filename>' [[-outputFile] '<filename>'] [-verbose]"
-	Write-Output "               [-debug] [-runtime20|-runtime40] [-x86|-x64] [-STA|-MTA] [-noConsole]"
-	Write-Output "               [-credentialGUI] [-iconFile '<filename>'] [-title '<title>'] [-description '<description>']"
-	Write-Output "               [-company '<company>'] [-product '<product>'] [-copyright '<copyright>'] [-trademark '<trademark>']"
-	Write-Output "               [-version '<version>'] [-configFile] [-noOutput] [-noError] [-requireAdmin] [-supportOS]"
-	Write-Output "               [-virtualize] [-longPaths]""`n"
-	Write-Output "    inputFile = Powershell script that you want to convert to executable"
-	Write-Output "   outputFile = destination executable file name, defaults to inputFile with extension '.exe'"
-	Write-Output "    runtime20 = this switch forces PS2EXE to create a config file for the generated executable that contains the"
-	Write-Output "                ""supported .NET Framework versions"" setting for .NET Framework 2.0/3.x for PowerShell 2.0"
-	Write-Output "    runtime40 = this switch forces PS2EXE to create a config file for the generated executable that contains the"
-	Write-Output "                ""supported .NET Framework versions"" setting for .NET Framework 4.x for PowerShell 3.0 or higher"
-	Write-Output "   x86 or x64 = compile for 32-bit or 64-bit runtime only"
-	Write-Output "   STA or MTA = 'Single Thread Apartment' or 'Multi Thread Apartment' mode"
-	Write-Output "    noConsole = the resulting executable will be a Windows Forms app without a console window"
-	Write-Output "credentialGUI = use GUI for prompting credentials in console mode"
-	Write-Output "     iconFile = icon file name for the compiled executable"
-	Write-Output "        title = title information (displayed in details tab of Windows Explorer's properties dialog)"
-	Write-Output "  description = description information (not displayed, but embedded in executable)"
-	Write-Output "      company = company information (not displayed, but embedded in executable)"
-	Write-Output "      product = product information (displayed in details tab of Windows Explorer's properties dialog)"
-	Write-Output "    copyright = copyright information (displayed in details tab of Windows Explorer's properties dialog)"
-	Write-Output "    trademark = trademark information (displayed in details tab of Windows Explorer's properties dialog)"
-	Write-Output "      version = version information (displayed in details tab of Windows Explorer's properties dialog)"
-	Write-Output "   configFile = write a config file (<outputfile>.exe.config)"
-	Write-Output "     noOutput = the resulting executable will generate no standard output (includes verbose and information channel)"
-	Write-Output "      noError = the resulting executable will generate no error output (includes warning and debug channel)"
-	Write-Output " requireAdmin = if UAC is enabled, compiled executable run only in elevated context (UAC dialog appears if required)"
-	Write-Output "    supportOS = use functions of newest Windows versions (execute [Environment]::OSVersion to see the difference)"
-	Write-Output "   virtualize = application virtualization is activated (forcing x86 runtime)"
-	Write-Output "    longPaths = enable long paths ( > 260 characters) if enabled on OS (works only with Windows 10)`n"
-	Write-Output "Input file not specified!"
-	exit -1
-}
-
 
 ###################################
 
@@ -223,33 +210,6 @@ if ($longPaths -and $virtualize)
 	exit -1
 }
 
-if ($runtime20 -and $runtime40)
-{
-	Write-Error "You cannot use switches -runtime20 and -runtime40 at the same time!"
-	exit -1
-}
-
-if (!$runtime20 -and !$runtime40)
-{
-	if ($psversion -eq 4)
-	{
-		$runtime40 = $TRUE
-	}
-	elseif ($psversion -eq 3)
-	{
-		$runtime40 = $TRUE
-	}
-	else
-	{
-		$runtime20 = $TRUE
-	}
-}
-
-if ($runtime20 -and $longPaths)
-{
-	Write-Error "Long paths are only available with .Net 4"
-	exit -1
-}
 
 $CFGFILE = $FALSE
 if ($configFile)
@@ -272,72 +232,6 @@ if ($STA -and $MTA)
 	exit -1
 }
 
-if ($psversion -ge 3 -and $runtime20)
-{
-	Write-Output "To create an EXE file for PowerShell 2.0 on PowerShell 3.0 or above this script now launches PowerShell 2.0...`n"
-
-	$arguments = "-inputFile '$($inputFile)' -outputFile '$($outputFile)' -nested "
-
-	if ($verbose) { $arguments += "-verbose "}
-	if ($debug) { $arguments += "-debug "}
-	if ($runtime20) { $arguments += "-runtime20 "}
-	if ($x86) { $arguments += "-x86 "}
-	if ($x64) { $arguments += "-x64 "}
-	if ($STA) { $arguments += "-STA "}
-	if ($MTA) { $arguments += "-MTA "}
-	if ($noConsole) { $arguments += "-noConsole "}
-	if (!([STRING]::IsNullOrEmpty($iconFile))) { $arguments += "-iconFile '$($iconFile)' "}
-	if (!([STRING]::IsNullOrEmpty($title))) { $arguments += "-title '$($title)' "}
-	if (!([STRING]::IsNullOrEmpty($description))) { $arguments += "-description '$($description)' "}
-	if (!([STRING]::IsNullOrEmpty($company))) { $arguments += "-company '$($company)' "}
-	if (!([STRING]::IsNullOrEmpty($product))) { $arguments += "-product '$($product)' "}
-	if (!([STRING]::IsNullOrEmpty($copyright))) { $arguments += "-copyright '$($copyright)' "}
-	if (!([STRING]::IsNullOrEmpty($trademark))) { $arguments += "-trademark '$($trademark)' "}
-	if (!([STRING]::IsNullOrEmpty($version))) { $arguments += "-version '$($version)' "}
-	if ($noOutput) { $arguments += "-noOutput "}
-	if ($noError) { $arguments += "-noError "}
-	if ($requireAdmin) { $arguments += "-requireAdmin "}
-	if ($virtualize) { $arguments += "-virtualize "}
-	if ($credentialGUI) { $arguments += "-credentialGUI "}
-	if ($supportOS) { $arguments += "-supportOS "}
-	if ($configFile) { $arguments += "-configFile "}
-	if ($noConfigFile) { $arguments += "-noConfigFile "}
-
-	if ($MyInvocation.MyCommand.CommandType -eq "ExternalScript")
-	{	# ps2exe.ps1 is running (script)
-		$jobScript = @"
-."$($PSHOME)\powershell.exe" -version 2.0 -command "&'$($MyInvocation.MyCommand.Path)' $($arguments)"
-"@
-	}
-	else
-	{ # ps2exe.exe is running (compiled script)
-		Write-Warning "The parameter -runtime20 is not supported for compiled ps2exe.ps1 scripts."
-		Write-Warning "Compile ps2exe.ps1 with parameter -runtime20 and call the generated executable (without -runtime20)."
-		exit -1
-	}
-
-	Invoke-Expression $jobScript
-
-	exit 0
-}
-
-if ($psversion -lt 3 -and $runtime40)
-{
-	Write-Error "You need to run ps2exe in an Powershell 3.0 or higher environment to use parameter -runtime40`n"
-	exit -1
-}
-
-if ($psversion -lt 3 -and !$MTA -and !$STA)
-{
-	# Set default apartment mode for powershell version if not set by parameter
-	$MTA = $TRUE
-}
-
-if ($psversion -ge 3 -and !$MTA -and !$STA)
-{
-	# Set default apartment mode for powershell version if not set by parameter
-	$STA = $TRUE
-}
 
 # escape escape sequences in version info
 $title = $title -replace "\\", "\\"
