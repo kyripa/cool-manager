@@ -31,8 +31,6 @@ this switch forces PS2EXE to create a config file for the generated executable t
 compile for 32-bit runtime only
 .PARAMETER x64
 compile for 64-bit runtime only
-.PARAMETER lcid
-location ID for the compiled executable. Current user culture if not specified
 .PARAMETER STA
 Single Thread Apartment mode
 .PARAMETER MTA
@@ -92,7 +90,7 @@ https://gallery.technet.microsoft.com/PS2EXE-GUI-Convert-e7cb69d5
 #>
 
 Param([STRING]$inputFile = $NULL, [STRING]$outputFile = $NULL, [SWITCH]$verbose, [SWITCH]$debug, [SWITCH]$runtime20, [SWITCH]$runtime40,
-	[SWITCH]$x86, [SWITCH]$x64, [int]$lcid, [SWITCH]$STA, [SWITCH]$MTA, [SWITCH]$nested, [SWITCH]$noConsole, [SWITCH]$credentialGUI,
+	[SWITCH]$x86, [SWITCH]$x64, [SWITCH]$STA, [SWITCH]$MTA, [SWITCH]$nested, [SWITCH]$noConsole, [SWITCH]$credentialGUI,
 	[STRING]$iconFile = $NULL, [STRING]$title, [STRING]$description, [STRING]$company, [STRING]$product, [STRING]$copyright, [STRING]$trademark,
 	[STRING]$version, [SWITCH]$configFile, [SWITCH]$noConfigFile, [SWITCH]$noOutput, [SWITCH]$noError, [SWITCH]$requireAdmin, [SWITCH]$supportOS,
 	[SWITCH]$virtualize, [SWITCH]$longPaths)
@@ -122,7 +120,7 @@ if ([STRING]::IsNullOrEmpty($inputFile))
 {
 	Write-Output "Usage:`n"
 	Write-Output "powershell.exe -command ""&'.\ps2exe.ps1' [-inputFile] '<filename>' [[-outputFile] '<filename>'] [-verbose]"
-	Write-Output "               [-debug] [-runtime20|-runtime40] [-x86|-x64] [-lcid <id>] [-STA|-MTA] [-noConsole]"
+	Write-Output "               [-debug] [-runtime20|-runtime40] [-x86|-x64] [-STA|-MTA] [-noConsole]"
 	Write-Output "               [-credentialGUI] [-iconFile '<filename>'] [-title '<title>'] [-description '<description>']"
 	Write-Output "               [-company '<company>'] [-product '<product>'] [-copyright '<copyright>'] [-trademark '<trademark>']"
 	Write-Output "               [-version '<version>'] [-configFile] [-noOutput] [-noError] [-requireAdmin] [-supportOS]"
@@ -134,7 +132,6 @@ if ([STRING]::IsNullOrEmpty($inputFile))
 	Write-Output "    runtime40 = this switch forces PS2EXE to create a config file for the generated executable that contains the"
 	Write-Output "                ""supported .NET Framework versions"" setting for .NET Framework 4.x for PowerShell 3.0 or higher"
 	Write-Output "   x86 or x64 = compile for 32-bit or 64-bit runtime only"
-	Write-Output "         lcid = location ID for the compiled executable. Current user culture if not specified"
 	Write-Output "   STA or MTA = 'Single Thread Apartment' or 'Multi Thread Apartment' mode"
 	Write-Output "    noConsole = the resulting executable will be a Windows Forms app without a console window"
 	Write-Output "credentialGUI = use GUI for prompting credentials in console mode"
@@ -286,7 +283,6 @@ if ($psversion -ge 3 -and $runtime20)
 	if ($runtime20) { $arguments += "-runtime20 "}
 	if ($x86) { $arguments += "-x86 "}
 	if ($x64) { $arguments += "-x64 "}
-	if ($lcid) { $arguments += "-lcid $lcid "}
 	if ($STA) { $arguments += "-STA "}
 	if ($MTA) { $arguments += "-MTA "}
 	if ($noConsole) { $arguments += "-noConsole "}
@@ -482,14 +478,6 @@ $scriptInp = [STRING]::Join("`r`n", $content)
 $script = [System.Convert]::ToBase64String(([System.Text.Encoding]::UTF8.GetBytes($scriptInp)))
 
 $culture = ""
-
-if ($lcid)
-{
-	$culture = @"
-	System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.GetCultureInfo($lcid);
-	System.Threading.Thread.CurrentThread.CurrentUICulture = System.Globalization.CultureInfo.GetCultureInfo($lcid);
-"@
-}
 
 $programFrame = @"
 // Simple PowerShell host created by Ingo Karstein (http://blog.karstein-consulting.com) for PS2EXE
