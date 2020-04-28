@@ -3,7 +3,7 @@ name: CI
 on: 
   push:
     branches: 
-      - ad
+      - master
 
 
 jobs:
@@ -18,16 +18,16 @@ jobs:
       id: vars
       run: echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
     - name: powershell env 
-      run:  $name = $env:copyright
+      run:  echo $env:copyright
       shell: powershell
       env:
-        title: "Git commit ${{ steps.vars.outputs.sha_short }}"  
+        title: "\"Git commit ${{ steps.vars.outputs.sha_short }}\""  
         copyright: "\"Andrew Kuripka\""
     - name: Compile ps1 to exe
-      run:  powershell .\ps2exe.ps1 -iconFile CoolManage.ico -inputFile CoolManage.ps1 -outputFile CoolManage.exe -title $env:title  -requireAdmin -copyright $name -noOutput -noError -noconsole -verbose 
+      run:  powershell .\ps2exe.ps1 -iconFile CoolManage.ico -inputFile CoolManage.ps1 -outputFile CoolManage.exe -title $env:title  -requireAdmin -copyright $env:copyright -noOutput -noError -noconsole -verbose 
       shell: powershell
       env:
-        title: "Git commit ${{ steps.vars.outputs.sha_short }}"  
+        title: "\"Git commit ${{ steps.vars.outputs.sha_short }}\""  
         copyright: "\"Andrew Kuripka\""        
     - name: Upload
       uses: "marvinpinto/action-automatic-releases@latest"
