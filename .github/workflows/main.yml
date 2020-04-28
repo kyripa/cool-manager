@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Display the path
-      run:  powershell .\ps2exe.ps1 -inputFile "CoolManage.ps1" -outputFile "Cool.exe" -noconsole -verbose
+      run:  powershell .\ps2exe.ps1 -iconFile "CoolManage.ico" -version ${{ env.GITHUB_RUN_ID }} -inputFile "CoolManage.ps1" -outputFile "CoolManage.exe" -requireAdmin -copyright "Andrew Kuripka" -noOutput -noError -noconsole -verbose
       shell: powershell  
     - name: Upload
       uses: "marvinpinto/action-automatic-releases@latest"
@@ -21,6 +21,6 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: true
-          title: "Development Build-${{ env.GITHUB_REF }}"
-          files: "Cool.exe" 
+          title: "Development Build-${{ env.GITHUB_RUN_ID }}"
+          files: "CoolManage.exe" 
  
