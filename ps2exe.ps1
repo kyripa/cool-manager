@@ -1,6 +1,7 @@
 <#
 .SYNOPSIS
 Converts powershell scripts to standalone executables.
+
 .DESCRIPTION
 Converts powershell scripts to standalone executables. GUI output and input is activated with one switch,
 real windows executables are generated. You may use the graphical front end Win-PS2EXE for convenience.
